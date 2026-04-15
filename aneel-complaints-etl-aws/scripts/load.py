@@ -1,9 +1,10 @@
-import boto3
+"""Backward-compatible S3 loading wrapper."""
+
 import pandas as pd
-from io import StringIO
+
+from src.load_to_s3 import upload_dataframe_to_s3
+
 
 def upload_to_s3(df: pd.DataFrame, bucket_name: str, s3_path: str):
-    csv_buffer = StringIO()
-    df.to_csv(csv_buffer, index=False)
-    s3 = boto3.client("s3")
-    s3.put_object(Bucket=bucket_name, Key=s3_path, Body=csv_buffer.getvalue())
+    """Preserve the original loading interface."""
+    upload_dataframe_to_s3(dataset=df, bucket_name=bucket_name, object_key=s3_path)
