@@ -1,0 +1,35 @@
+[tool.poetry]
+package-mode = false
+name = "climate-analytics-dbt-pipeline"
+version = "0.1.0"
+description = "Production-oriented analytics engineering pipeline with dbt, DuckDB, and climate data."
+authors = ["Letícia Gomes"]
+
+[tool.poetry.dependencies]
+dbt-duckdb = "^1.7.0"
+python = ">=3.9,<3.12"
+pandas = "^2.2.3"
+requests = "^2.32.3"
+
+
+
+[tool.poetry.group.dev.dependencies]
+taskipy = "^1.12.0"
+
+[tool.taskipy.tasks]
+dbt_seed = "dbt seed"
+dbt_run = "dbt run"
+dbt_test = "dbt test"
+dbt_docs_generate = "dbt docs generate"
+dbt_docs_serve = "dbt docs serve"
+dbt_docs = "poetry run task dbt_docs_generate && poetry run task dbt_docs_serve"
+generate_seed = "python scripts/generate_climate_seed.py"
+dbt_all = "poetry run task generate_seed && poetry run task dbt_seed && poetry run task dbt_run && poetry run task dbt_test"
+git_stage = "git add ."
+git_commit = "git commit -m 'Atualizações no projeto'"
+git_push = "git push"
+git_all = "poetry run task git_stage && poetry run task git_commit && poetry run task git_push"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

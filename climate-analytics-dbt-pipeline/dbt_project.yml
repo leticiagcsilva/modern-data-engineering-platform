@@ -1,0 +1,12 @@
+name: 'climate_analytics_dbt_pipeline'
+version: '1.0'
+config-version: 2
+
+profile: 'climate_analytics_dbt_pipeline'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+
+models:
+  climate_analytics_dbt_pipeline:
+    +materialized: view

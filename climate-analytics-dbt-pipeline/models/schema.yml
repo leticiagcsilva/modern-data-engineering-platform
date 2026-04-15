@@ -1,0 +1,59 @@
+version: 2
+
+seeds:
+  - name: daily_climate_northeast_capitals
+    description: Reproducible daily climate seed generated from the Open-Meteo archive API for Northeast Brazil capital cities.
+    columns:
+      - name: date
+        description: Observation date returned by the source API.
+        tests: [not_null]
+      - name: city
+        description: Capital city name associated with the observation.
+        tests: [not_null]
+      - name: state
+        description: Two-letter Brazilian state code for the city.
+        tests: [not_null]
+      - name: temperature_max
+        description: Maximum daily temperature in degrees Celsius.
+      - name: temperature_min
+        description: Minimum daily temperature in degrees Celsius.
+      - name: precipitation
+        description: Total daily precipitation in millimeters.
+
+models:
+  - name: stg_climate
+    description: Standardized observation-level climate dataset with normalized dimensions and typed measures.
+    columns:
+      - name: observation_date
+        description: Observation date cast to a SQL date.
+        tests: [not_null]
+      - name: city
+        description: Lowercased city name for consistent analytical grouping.
+        tests: [not_null]
+      - name: state
+        description: State code for the city.
+        tests: [not_null]
+      - name: temperature_max
+        description: Maximum daily temperature as a float.
+      - name: temperature_min
+        description: Minimum daily temperature as a float.
+      - name: precipitation
+        description: Total daily precipitation as a float.
+  - name: mart_climate_summary
+    description: Yearly climate summary by city and state for downstream analytics and reporting.
+    columns:
+      - name: city
+        description: City included in the annual summary.
+        tests: [not_null]
+      - name: state
+        description: State code associated with the city.
+        tests: [not_null]
+      - name: year
+        description: Calendar year of the aggregated observations.
+        tests: [not_null]
+      - name: avg_temperature_max
+        description: Average daily maximum temperature for the year.
+      - name: avg_temperature_min
+        description: Average daily minimum temperature for the year.
+      - name: total_precipitation
+        description: Total precipitation accumulated across the year.

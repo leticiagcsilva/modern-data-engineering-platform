@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "etl-aneel-aws"
+version = "0.1.0"
+description = "ETL pipeline for public consumer complaint data from ANEEL to AWS S3"
+authors = ["Leticia Gomes <leticiagomes.datascience@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+requests = "^2.31.0"
+pandas = "^2.2.1"
+boto3 = "^1.34.0"
+
+[tool.poetry.dev-dependencies]
+taskipy = "^1.12.0"
+
+[tool.taskipy.tasks]
+run = "python main.py"
+deploy = "git add . && git commit -m 'chore: deploy ETL to GitHub' && git push"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

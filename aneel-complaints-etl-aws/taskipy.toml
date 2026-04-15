@@ -1,0 +1,3 @@
+[tool.taskipy.tasks]
+run = "python main.py"
+deploy = "git add . && git commit -m 'chore: deploy ETL to GitHub' && git push"
